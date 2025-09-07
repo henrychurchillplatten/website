@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Strategy Assessment - Find Your Perfect AI Approach | Henry Platten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .expert-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 0.9em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #1e3c72;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover {
+            border-color: #2a5298;
+            background: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(42, 82, 152, 0.15);
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option.selected {
+            border-color: #1e3c72;
+            background: #e8f2ff;
+            transform: scale(1.02);
+        }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #1e3c72;
+        }
+
+        .option-description {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .contact-form {
+            display: none;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-form.active {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 5px;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategy-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .build-own { background: linear-gradient(135deg, #ff6b6b, #ee5a52); }
+        .license-data { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .third-party { background: linear-gradient(135deg, #45b7d1, #3498db); }
+
+        .result-title {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+
+        .result-description {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #555;
+            text-align: left;
+        }
+
+        .recommendations {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .recommendations h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .recommendations li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        .expert-cta {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .expert-cta h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .expert-cta p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 24px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .insight-box h4 {
+            color: #1976D2;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">⏱️ 90s</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Strategy Assessment</h1>
+            <p>Discover the optimal AI approach for your business in 90 seconds</p>
+            <div class="expert-badge">By Henry Platten - AI Strategy Expert</div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="content">
+            <!-- Question 1: Business Complexity -->
+            <div class="question-container active" id="question1">
+                <div class="question">What best describes your business's AI requirements?</div>
+                <div class="insight-box">
+                    <h4>🎯 Strategy Insight</h4>
+                    <p>The complexity of your AI needs determines whether you should build custom solutions, licence existing data/models, or adopt third-party tools.</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="build" data-question="1">
+                        <div class="option-title">Highly Specific & Competitive Advantage</div>
+                        <div class="option-description">Unique workflows, proprietary data, or AI as core business differentiator</div>
+                    </div>
+                    <div class="option" data-value="license" data-question="1">
+                        <div class="option-title">Industry-Specific with Data Assets</div>
+                        <div class="option-description">Standard industry processes but valuable proprietary datasets</div>
+                    </div>
+                    <div class="option" data-value="third-party" data-question="1">
+                        <div class="option-title">Common Business Functions</div>
+                        <div class="option-description">Customer service, content creation, data analysis - standard use cases</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2: Technical Capability -->
+            <div class="question-container" id="question2">
+                <div class="question">What's your organisation's technical development capability?</div>
+                <div class="insight-box">
+                    <h4>⚡ Technical Reality Check</h4>
+                    <p>Building AI requires significant technical expertise. Be honest about your current capabilities versus what you can realistically develop.</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="build" data-question="2">
+                        <div class="option-title">Strong In-House Tech Team</div>
+                        <div class="option-description">Data scientists, ML engineers, or ability to hire/train them</div>
+                    </div>
+                    <div class="option" data-value="license" data-question="2">
+                        <div class="option-title">Good Technical Foundation</div>
+                        <div class="option-description">Solid IT team but limited AI/ML experience</div>
+                    </div>
+                    <div class="option" data-value="third-party" data-question="2">
+                        <div class="option-title">Limited Technical Resources</div>
+                        <div class="option-description">Small IT team focused on keeping systems running</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3: Budget & Timeline -->
+            <div class="question-container" id="question3">
+                <div class="question">What's your budget and timeline expectations?</div>
+                <div class="insight-box">
+                    <h4>💰 Investment Reality</h4>
+                    <p>Custom AI development typically costs £100k-£500k+ and takes 6-18 months. Third-party tools start at £50-£500/month with immediate implementation.</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="build" data-question="3">
+                        <div class="option-title">Significant Investment (£100k+ / 6-18 months)</div>
+                        <div class="option-description">Long-term strategic investment with substantial budget</div>
+                    </div>
+                    <div class="option" data-value="license" data-question="3">
+                        <div class="option-title">Moderate Investment (£20k-100k / 3-6 months)</div>
+                        <div class="option-description">Balanced approach with reasonable timeline</div>
+                    </div>
+                    <div class="option" data-value="third-party" data-question="3">
+                        <div class="option-title">Quick Results (£500-5k/month / 1-4 weeks)</div>
+                        <div class="option-description">Fast implementation with manageable ongoing costs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4: Data Sensitivity -->
+            <div class="question-container" id="question4">
+                <div class="question">How sensitive is your business data and regulatory environment?</div>
+                <div class="insight-box">
+                    <h4>🔒 Data Governance</h4>
+                    <p>Highly regulated industries or sensitive data may require on-premises solutions or specific compliance certifications.</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="build" data-question="4">
+                        <div class="option-title">Highly Sensitive / Heavily Regulated</div>
+                        <div class="option-description">Financial services, healthcare, government - strict compliance requirements</div>
+                    </div>
+                    <div class="option" data-value="license" data-question="4">
+                        <div class="option-title">Moderately Sensitive</div>
+                        <div class="option-description">Some sensitive data but can work with certified cloud providers</div>
+                    </div>
+                    <div class="option" data-value="third-party" data-question="4">
+                        <div class="option-title">Standard Business Data</div>
+                        <div class="option-description">Normal commercial data, comfortable with cloud-based solutions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5: Scale & Growth -->
+            <div class="question-container" id="question5">
+                <div class="question">What are your scaling requirements and growth trajectory?</div>
+                <div class="insight-box">
+                    <h4>📈 Future-Proofing</h4>
+                    <p>Consider not just current needs but where you'll be in 2-3 years. Some solutions scale better than others.</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="build" data-question="5">
+                        <div class="option-title">Massive Scale / Rapid Growth</div>
+                        <div class="option-description">Expecting 10x+ growth, need solution that scales infinitely</div>
+                    </div>
+                    <div class="option" data-value="license" data-question="5">
+                        <div class="option-title">Steady Growth</div>
+                        <div class="option-description">Predictable expansion, need flexible scaling options</div>
+                    </div>
+                    <div class="option" data-value="third-party" data-question="5">
+                        <div class="option-title">Stable Operations</div>
+                        <div class="option-description">Focus on efficiency improvements rather than massive growth</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form" id="contactForm">
+                <h3>Get Your Personalised AI Strategy Roadmap</h3>
+                <p>Receive a detailed implementation plan and next steps based on your assessment results.</p>
+                
+                <div class="form-group">
+                    <label for="companyName">Company Name *</label>
+                    <input type="text" id="companyName" required placeholder="Enter your company name">
+                </div>
+
+                <div class="form-group">
+                    <label for="yourName">Your Name *</label>
+                    <input type="text" id="yourName" required placeholder="Your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" required placeholder="your.email@company.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Your Role *</label>
+                    <select id="role" required>
+                        <option value="">Select your role</option>
+                        <option value="CEO/Founder">CEO/Founder</option>
+                        <option value="CTO/Tech Lead">CTO/Tech Lead</option>
+                        <option value="Operations Director">Operations Director</option>
+                        <option value="Board Member">Board Member</option>
+                        <option value="Other C-Suite">Other C-Suite</option>
+                        <option value="Department Head">Department Head</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="marketingConsent" required>
+                    <label for="marketingConsent">
+                        I'd like to receive Henry's AI strategy insights and case studies. 
+                        You can unsubscribe at any time. <small>(Required to receive your results)</small>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="results" id="results">
+                <div class="strategy-badge" id="strategyBadge"></div>
+                <div class="result-title" id="resultTitle"></div>
+                <div class="result-description" id="resultDescription"></div>
+                <div class="recommendations" id="recommendations"></div>
+                <div class="expert-cta">
+                    <h3>Ready to Implement Your AI Strategy?</h3>
+                    <p>Henry Platten helps organisations successfully navigate their AI journey from strategy to implementation.</p>
+                    <div class="cta-buttons">
+                        <a href="mailto:henry@henryplatten.com?subject=AI Strategy Consultation" class="cta-btn">Book Strategy Call</a>
+                        <a href="#" class="cta-btn">Fractional AI Lead</a>
+                        <a href="#" class="cta-btn">Board Advisory</a>
+                        <a href="#" class="cta-btn">Speaking Enquiry</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        let answers = {};
+        let startTime = Date.now();
+        let timerInterval;
+
+        // Start timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const remaining = Math.max(0, 90 - elapsed);
+                document.getElementById('timer').textContent = `⏱️ ${remaining}s`;
+                
+                if (remaining === 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = '⏱️ Complete!';
+                }
+            }, 1000);
+        }
+
+        startTimer();
+
+        // Handle option selection
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('option') || e.target.closest('.option')) {
+                const option = e.target.classList.contains('option') ? e.target : e.target.closest('.option');
+                const questionNum = option.dataset.question;
+                const value = option.dataset.value;
+                
+                // Remove previous selections
+                document.querySelectorAll(`[data-question="${questionNum}"]`).forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selection
+                option.classList.add('selected');
+                answers[questionNum] = value;
+                
+                // Enable next button
+                document.getElementById('nextBtn').disabled = false;
+            }
+        });
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById(`question${currentQuestion}`).classList.remove('active');
+                currentQuestion++;
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+                
+                updateProgress();
+                
+                // Update buttons
+                document.getElementById('prevBtn').style.display = 'block';
+                document.getElementById('nextBtn').disabled = true;
+                
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('nextBtn').textContent = 'Get My AI Strategy';
+                    document.getElementById('nextBtn').onclick = showContactForm;
+                }
+                
+                // Check if already answered
+                if (answers[currentQuestion]) {
+                    document.getElementById('nextBtn').disabled = false;
+                    document.querySelector(`[data-question="${currentQuestion}"][data-value="${answers[currentQuestion]}"]`).classList.add('selected');
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById(`question${currentQuestion}`).classList.remove('active');
+                currentQuestion--;
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+                
+                updateProgress();
+                
+                // Update buttons
+                if (currentQuestion === 1) {
+                    document.getElementById('prevBtn').style.display = 'none';
+                }
+                
+                document.getElementById('nextBtn').textContent = 'Next Question';
+                document.getElementById('nextBtn').onclick = nextQuestion;
+                document.getElementById('nextBtn').disabled = false;
+                
+                // Show previous selection
+                if (answers[currentQuestion]) {
+                    document.querySelector(`[data-question="${currentQuestion}"][data-value="${answers[currentQuestion]}"]`).classList.add('selected');
+                }
+            }
+        }
+
+        function showContactForm() {
+            // Hide current question
+            document.getElementById(`question${currentQuestion}`).classList.remove('active');
+            
+            // Show contact form
+            document.getElementById('contactForm').classList.add('active');
+            
+            // Update buttons
+            document.getElementById('prevBtn').style.display = 'block';
+            document.getElementById('nextBtn').textContent = 'Get My Results';
+            document.getElementById('nextBtn').onclick = calculateResults;
+            document.getElementById('nextBtn').disabled = true;
+            
+            // Enable submit when form is complete
+            const requiredFields = ['companyName', 'yourName', 'email', 'role'];
+            const consentCheckbox = document.getElementById('marketingConsent');
+            
+            function checkFormCompletion() {
+                const allFieldsFilled = requiredFields.every(id => document.getElementById(id).value.trim() !== '');
+                const consentGiven = consentCheckbox.checked;
+                document.getElementById('nextBtn').disabled = !(allFieldsFilled && consentGiven);
+            }
+            
+            requiredFields.forEach(id => {
+                document.getElementById(id).addEventListener('input', checkFormCompletion);
+                document.getElementById(id).addEventListener('change', checkFormCompletion);
+            });
+            consentCheckbox.addEventListener('change', checkFormCompletion);
+        }
+
+        function calculateResults() {
+            // Hide contact form
+            document.getElementById('contactForm').classList.remove('active');
+            
+            // Hide navigation
+            document.querySelector('.nav-buttons').style.display = 'none';
+            
+            // Determine strategy based on answers
+            const strategy = determineStrategy(answers);
+            
+            // Show results
+            displayResults(strategy);
+            
+            // Update progress to 100%
+            document.getElementById('progressFill').style.width = '100%';
+            
+            // Clear timer
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = '✅ Complete';
+
+            // Log results for lead generation
+            console.log('Assessment Results:', {
+                company: document.getElementById('companyName').value,
+                name: document.getElementById('yourName').value,
+                email: document.getElementById('email').value,
+                role: document.getElementById('role').value,
+                strategy: strategy.type,
+                answers: answers,
+                timestamp: new Date().toISOString(),
+                completionTime: Math.floor((Date.now() - startTime) / 1000)
+            });
+        }
+
+        function determineStrategy(userAnswers) {
+            // Count votes for each strategy
+            const votes = { build: 0, license: 0, 'third-party': 0 };
+            Object.values(userAnswers).forEach(answer => {
+                votes[answer]++;
+            });
+
+            // Determine winner
+            const winner = Object.keys(votes).reduce((a, b) => votes[a] > votes[b] ? a : b);
+
+            const strategies = {
+                'build': {
+                    type: 'build',
+                    title: 'Build Your Own AI Solution',
+                    badge: '🏗️ Build Own Solution',
+                    description: `Your organisation has the perfect combination of unique requirements, technical capability, and strategic vision to justify building custom AI solutions. This approach gives you maximum control, competitive advantage, and the ability to create truly differentiated capabilities.`,
+                    recommendations: [
+                        'Start with a comprehensive AI strategy and architecture design',
+                        'Hire or train AI/ML engineers and data scientists',
+                        'Establish robust data infrastructure and MLOps practices',
+                        'Begin with a pilot project to prove ROI before scaling',
+                        'Consider partnerships with AI consultancies for initial development'
+                    ],
+                    timeline: '6-18 months for initial deployment',
+                    investment: '£100k-£500k+ initial investment',
+                    nextSteps: 'Book a strategy consultation to design your custom AI roadmap'
+                },
+                'license': {
+                    type: 'license',
+                    title: 'Licence Data & Pre-trained Models',
+                    badge: '🤝 Licence & Adapt',
+                    description: `The smart middle ground - leverage existing AI models and datasets while maintaining flexibility and control. This approach allows you to benefit from proven AI capabilities whilst customising for your specific industry and use cases.`,
+                    recommendations: [
+                        'Identify industry-specific AI model providers and data partners',
+                        'Negotiate licensing agreements that allow customisation',
+                        'Develop integration capabilities with your existing systems',
+                        'Create processes for ongoing model fine-tuning and improvement',
+                        'Establish vendor management and performance monitoring'
+                    ],
+                    timeline: '3-6 months for initial implementation',
+                    investment: '£20k-£100k setup + ongoing licensing fees',
+                    nextSteps: 'Explore licensing partnerships and vendor evaluation frameworks'
+                },
+                'third-party': {
+                    type: 'third-party',
+                    title: 'Adopt Third-Party AI Tools',
+                    badge: '⚡ Ready-Made Solutions',
+                    description: `The fastest path to AI value - leverage proven, off-the-shelf AI tools that can be implemented immediately. This approach minimises risk, reduces time to value, and allows you to focus on your core business whilst benefiting from AI capabilities.`,
+                    recommendations: [
+                        'Audit your current processes to identify AI-ready opportunities',
+                        'Evaluate and pilot leading AI tools in your priority areas',
+                        'Develop AI governance policies and user training programmes',
+                        'Start with low-risk, high-impact use cases to build confidence',
+                        'Plan integration strategies with your existing tech stack'
+                    ],
+                    timeline: '1-4 weeks for initial deployment',
+                    investment: '£500-£5k/month ongoing subscription costs',
+                    nextSteps: 'Begin with an AI readiness assessment and tool evaluation'
+                }
+            };
+
+            return strategies[winner];
+        }
+
+        function displayResults(strategy) {
+            document.getElementById('results').classList.add('active');
+            
+            // Set strategy badge
+            const badge = document.getElementById('strategyBadge');
+            badge.textContent = strategy.badge;
+            badge.classList.add(strategy.type.replace('-', ''));
+            
+            // Set content
+            document.getElementById('resultTitle').textContent = strategy.title;
+            document.getElementById('resultDescription').textContent = strategy.description;
+            
+            // Create recommendations
+            const recommendationsList = strategy.recommendations.map(rec => `<li>${rec}</li>`).join('');
+            document.getElementById('recommendations').innerHTML = `
+                <h3>🚀 Your Strategic Roadmap</h3>
+                <ul>${recommendationsList}</ul>
+                <div style="margin-top: 20px; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+                    <strong>Timeline:</strong> ${strategy.timeline}<br>
+                    <strong>Investment:</strong> ${strategy.investment}<br>
+                    <strong>Next Step:</strong> ${strategy.nextSteps}
+                </div>
+            `;
+        }
+
+        // Initialize
+        updateProgress();
+        
+        // Add micro-interactions
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(-2px)';
+                }
+            });
+            
+            option.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

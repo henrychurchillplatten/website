@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henry Platten - AI Strategy Expert | Fractional AI Leadership & Board Advisory</title>
+    <meta name="description" content="International AI strategy expert helping SMEs navigate their AI journey. Fractional AI leadership, board advisory, and keynote speaking services.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #ffffff, #e3f2fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero-content .description {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .credentials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .credential-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .hero-visual {
+            text-align: center;
+            position: relative;
+        }
+
+        .assessment-preview {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assessment-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 10s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .assessment-preview h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .assessment-preview p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .preview-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 40px;
+            background: #f8f9fa;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+
+        .section-header p {
+            font-size: 1.2em;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #1e3c72;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #1e3c72;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-features li {
+            padding: 5px 0;
+            color: #555;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* Speaking Section */
+        .speaking {
+            padding: 100px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .speaking-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .speaking-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .speaking-topics {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .topic {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .testimonials {
+            display: grid;
+            gap: 20px;
+        }
+
+        .testimonial {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #ffffff;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        /* Assessment CTA Section */
+        .assessment-cta {
+            padding: 100px 40px;
+            background: white;
+            text-align: center;
+        }
+
+        .assessment-cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .assessment-cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+
+        .assessment-cta p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #666;
+        }
+
+        .assessment-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature h4 {
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 60px 40px 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 20px;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+
+            .services, .speaking, .assessment-cta {
+                padding: 60px 20px;
+            }
+
+            .speaking-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .preview-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animation delays for staggered effects */
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>AI Strategy That Delivers Results</h1>
+                <p class="subtitle">Fractional AI Leadership • Board Advisory • Keynote Speaking</p>
+                <p class="description">
+                    International AI expert helping SMEs navigate their AI journey from strategy to implementation. 
+                    Trusted by organisations across 70+ countries to unlock AI's transformative potential.
+                </p>
+                
+                <div class="credentials">
+                    <span class="credential-badge">🏆 Nominet Award Winner</span>
+                    <span class="credential-badge">🌍 70+ Countries Impact</span>
+                    <span class="credential-badge">📊 Patent-Pending AI Solutions</span>
+                    <span class="credential-badge">🎤 International Speaker</span>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="#assessment" class="btn btn-primary">Take Free AI Strategy Assessment</a>
+                    <a href="mailto:henry@henryplatten.com?subject=AI Strategy Consultation" class="btn btn-secondary">Book Strategy Call</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="assessment-preview">
+                    <h3>🤖 AI Strategy Assessment</h3>
+                    <p>Discover your optimal AI approach in 90 seconds</p>
+                    
+                    <div class="preview-stats">
+                        <div class="stat">
+                            <span class="stat-number">90</span>
+                            <span class="stat-label">Seconds</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Strategies</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">∞</span>
+                            <span class="stat-label">Value</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#assessment" class="btn btn-primary">Start Assessment</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="services-container">
+            <div class="section-header">
+                <h2>How I Help Organisations Succeed with AI</h2>
+                <p>From strategy development to hands-on implementation, I provide the expertise you need to navigate your AI transformation successfully.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card fade-in-up">
+                    <span class="service-icon">🎯</span>
+                    <h3>Fractional AI Leadership</h3>
+                    <p>Part-time AI leadership for organisations that need strategic AI direction without the commitment of a full-time hire.</p>
+                    <ul class="service-features">
+                        <li>AI strategy development and roadmapping</li>
+                        <li>Team building and capability assessment</li>
+                        <li>Technology evaluation and vendor selection</li>
+                        <li>Implementation oversight and risk management</li>
+                        <li>Performance monitoring and optimisation</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up">
+                    <span class="service-icon">👔</span>
+                    <h3>Board Advisory</h3>
+                    <p>Strategic AI governance and oversight for boards navigating the opportunities and risks of artificial intelligence.</p>
+                    <ul class="service-features">
+                        <li>AI governance framework development</li>
+                        <li>Risk assessment and mitigation strategies</li>
+                        <li>Investment prioritisation and ROI evaluation</li>
+                        <li>Regulatory compliance and ethical AI practices</li>
+                        <li>Market opportunity identification</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up">
+                    <span class="service-icon">🎤</span>
+                    <h3>Keynote Speaking</h3>
+                    <p>Engaging presentations that demystify AI and inspire action, tailored for your audience and industry context.</p>
+                    <ul class="service-features">
+                        <li>AI strategy and implementation insights</li>
+                        <li>Digital transformation and innovation</li>
+                        <li>Online safety and ethical AI practices</li>
+                        <li>Future of work and industry disruption</li>
+                        <li>Custom topics for your event</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speaking Section -->
+    <section class="speaking">
+        <div class="speaking-container">
+            <div class="speaking-content">
+                <h2>International Speaking Experience</h2>
+                <p>Recognised speaker at prestigious conferences worldwide, delivering insights that drive real business transformation.</p>
+                
+                <div class="speaking-topics">
+                    <div class="topic">
+                        <strong>AI Strategy for SMEs</strong> - Practical approaches to AI adoption
+                    </div>
+                    <div class="topic">
+                        <strong>Digital Transformation</strong> - Leading change in the AI era
+                    </div>
+                    <div class="topic">
+                        <strong>Ethical AI & Online Safety</strong> - Responsible AI implementation
+                    </div>
+                    <div class="topic">
+                        <strong>Future of Work</strong> - Preparing teams for AI-augmented roles
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="mailto:henry@henryplatten.com?subject=Speaking Enquiry" class="btn btn-primary">Book Speaking Engagement</a>
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Henry's superb presentation style and energy captivates the room! He can take very complex subjects and explain them clearly with no jargon - a real skill!"</p>
+                    <p class="testimonial-author">- Dawn Spence, Headteacher, Argoed High School</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">"We thought we knew a fair bit about AI until he came into our organisation, now it's taken our strategy to the next level. He is a must-have for any leadership team."</p>
+                    <p class="testimonial-author">- Senior Executive, Technology Firm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment CTA Section -->
+    <section class="assessment-cta" id="assessment">
+        <div class="assessment-cta-container">
+            <h2>Find Your Perfect AI Strategy</h2>
+            <p>Take our comprehensive assessment to discover whether you should build your own AI, licence existing solutions, or adopt third-party tools.</p>
+            
+            <div class="assessment-features">
+                <div class="feature">
+                    <span class="feature-icon">⚡</span>
+                    <h4>90 Seconds</h4>
+                    <p>Quick, focused questions that get to the heart of your AI strategy needs</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🎯</span>
+                    <h4>Personalised Results</h4>
+                    <p>Tailored recommendations based on your specific business context</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📋</span>
+                    <h4>Actionable Roadmap</h4>
+                    <p>Clear next steps and implementation guidance for your chosen strategy</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">💡</span>
+                    <h4>Expert Insights</h4>
+                    <p>AI strategy wisdom from real-world implementations across 70+ countries</p>
+                </div>
+            </div>
+
+            <a href="assessment.html" class="btn btn-primary" style="font-size: 1.2em; padding: 20px 40px;">Start Your AI Strategy Assessment</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Henry Platten</h3>
+                <p>AI Strategy Expert helping organisations navigate their AI transformation journey with confidence and clarity.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📧</a>
+                    <a href="#" class="social-link">💼</a>
+                    <a href="#" class="social-link">🐦</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p><a href="mailto:henry@henryplatten.com?subject=Fractional AI Leadership">Fractional AI Leadership</a></p>
+                <p><a href="mailto:henry@henryplatten.com?subject=Board Advisory">Board Advisory</a></p>
+                <p><a href="mailto:henry@henryplatten.com?subject=Speaking Enquiry">Keynote Speaking</a></p>
+                <p><a href="assessment.html">AI Strategy Assessment</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Experience</h3>
+                <p>🏆 Nominet Award Winner</p>
+                <p>🌍 70+ Countries Impact</p>
+                <p>🎤 International Conference Speaker</p>
+                <p>📊 Patent-Pending AI Solutions</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><a href="mailto:henry@henryplatten.com">henry@henryplatten.com</a></p>
+                <p>Available for:</p>
+                <p>• Strategy consultations</p>
+                <p>• Speaking engagements</p>
+                <p>• Fractional AI leadership</p>
+                <p>• Board advisory roles</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Henry Platten - AI Thought Leader | International Patent Holder | Emotion AI Expert | Global AI Innovation Presenter | Government AI Advisor | AI for Sports Pioneer</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all service cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(card);
+        });
+
+        // Add some interactive micro-animations
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Background pattern animation
+        let tiltAngle = 0;
+        setInterval(() => {
+            tiltAngle += 0.5;
+            document.querySelector('.hero::before').style.transform = `translateY(-20px) rotate(${tiltAngle}deg)`;
+        }, 100);
+    </script>
+</body>
+</html>
