@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Readiness Assessment - Is Your SME Ready for AI Tools?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option.selected {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+            transform: scale(1.02);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .contact-form {
+            display: none;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-form.active {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 5px;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .score-high { background: linear-gradient(135deg, #4CAF50, #45a049); }
+        .score-medium { background: linear-gradient(135deg, #FF9800, #F57C00); }
+        .score-low { background: linear-gradient(135deg, #f44336, #d32f2f); }
+
+        .result-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .result-description {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .recommendations {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .recommendations h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .recommendations li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .cta h3 {
+            margin-bottom: 10px;
+        }
+
+        .ai-insight {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .ai-insight h4 {
+            color: #1976D2;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .sources {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .sources h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">⏱️ 60s</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Readiness Assessment</h1>
+            <p>Discover if your SME is ready to harness internal AI tools in under 60 seconds</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="content">
+            <!-- Question 1 -->
+            <div class="question-container active" id="question1">
+                <div class="question">How many repetitive, manual tasks does your team currently handle daily?</div>
+                <div class="ai-insight">
+                    <h4>🧠 AI Insight</h4>
+                    <p>Research shows that <strong>94% of workers perform repetitive, time-consuming tasks</strong> in their role, with office workers spending <strong>over 50% of their time on repetitive work</strong> (Zapier, 2024; ProcessMaker, 2024).</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="3" data-question="1">
+                        <strong>Many (10+ hours/day across team)</strong><br>
+                        <small>Document processing, data entry, customer queries, scheduling</small>
+                    </div>
+                    <div class="option" data-value="2" data-question="1">
+                        <strong>Some (5-10 hours/day across team)</strong><br>
+                        <small>Email management, basic reporting, invoice processing</small>
+                    </div>
+                    <div class="option" data-value="1" data-question="1">
+                        <strong>Few (Under 5 hours/day across team)</strong><br>
+                        <small>Mostly unique, creative work with minimal repetition</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-container" id="question2">
+                <div class="question">What's your current approach to data and decision-making?</div>
+                <div class="ai-insight">
+                    <h4>📊 AI Insight</h4>
+                    <p>Companies using AI see <strong>25-30% average productivity increases</strong> in automated processes, with <strong>60% achieving ROI within 12 months</strong> of implementation (Kissflow, 2025).</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="1" data-question="2">
+                        <strong>Gut feeling and experience</strong><br>
+                        <small>Decisions based primarily on intuition and past experience</small>
+                    </div>
+                    <div class="option" data-value="2" data-question="2">
+                        <strong>Basic spreadsheet analysis</strong><br>
+                        <small>Some data analysis but mostly manual processes</small>
+                    </div>
+                    <div class="option" data-value="3" data-question="2">
+                        <strong>Regular data analysis with insights</strong><br>
+                        <small>Systematic approach to gathering and analysing business data</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-container" id="question3">
+                <div class="question">How comfortable is your team with new technology adoption?</div>
+                <div class="ai-insight">
+                    <h4>⚡ AI Insight</h4>
+                    <p><strong>88% of SMBs say automation allows them to compete with larger companies</strong>, whilst <strong>90% of knowledge workers report automation has improved their workplace</strong> (Zapier, 2024).</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="3" data-question="3">
+                        <strong>Very comfortable</strong><br>
+                        <small>Team quickly adopts new tools and enjoys learning technology</small>
+                    </div>
+                    <div class="option" data-value="2" data-question="3">
+                        <strong>Moderately comfortable</strong><br>
+                        <small>Some hesitation but willing to learn with proper training</small>
+                    </div>
+                    <div class="option" data-value="1" data-question="3">
+                        <strong>Cautious about change</strong><br>
+                        <small>Prefer established processes and need significant support for changes</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-container" id="question4">
+                <div class="question">What's your biggest operational challenge right now?</div>
+                <div class="ai-insight">
+                    <h4>🎯 AI Insight</h4>
+                    <p>SMEs using AI report <strong>2.5 times higher revenue growth</strong> than those without. Companies with integrated tech stacks are <strong>twice as likely to achieve growth</strong> (Salesforce, 2024).</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="3" data-question="4">
+                        <strong>Scaling operations efficiently</strong><br>
+                        <small>Need to handle more work without proportionally increasing costs</small>
+                    </div>
+                    <div class="option" data-value="2" data-question="4">
+                        <strong>Maintaining quality whilst growing</strong><br>
+                        <small>Struggling to keep standards consistent as we expand</small>
+                    </div>
+                    <div class="option" data-value="1" data-question="4">
+                        <strong>Managing current workload</strong><br>
+                        <small>Focus is on optimising existing processes rather than growth</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-container" id="question5">
+                <div class="question">What's your budget appetite for productivity improvements?</div>
+                <div class="ai-insight">
+                    <h4>💰 AI Insight</h4>
+                    <p>Companies using generative AI achieve an <strong>average ROI of £3.70 for every £1 invested</strong>, with top performers seeing <strong>£10.30 return per £1 invested</strong> (2024 research).</p>
+                </div>
+                <div class="options">
+                    <div class="option" data-value="3" data-question="5">
+                        <strong>Ready to invest for growth</strong><br>
+                        <small>£2k-10k+ monthly budget for tools that drive clear ROI</small>
+                    </div>
+                    <div class="option" data-value="2" data-question="5">
+                        <strong>Modest investment possible</strong><br>
+                        <small>£500-2k monthly for proven productivity gains</small>
+                    </div>
+                    <div class="option" data-value="1" data-question="5">
+                        <strong>Cost-conscious approach</strong><br>
+                        <small>Under £500 monthly, need immediate cost savings</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form" id="contactForm">
+                <h3>Get Your Personalised AI Strategy Report</h3>
+                <p>Receive detailed recommendations and next steps tailored to your assessment results.</p>
+                
+                <div class="form-group">
+                    <label for="companyName">Company Name *</label>
+                    <input type="text" id="companyName" required placeholder="Enter your company name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="linkedinId">LinkedIn Profile URL</label>
+                    <input type="url" id="linkedinId" placeholder="https://linkedin.com/in/yourprofile (optional)">
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="marketingConsent" required>
+                    <label for="marketingConsent">
+                        I agree to receive future insights and case studies about AI implementation for SMEs. 
+                        You can unsubscribe at any time. <small>(Required to receive your results)</small>
+                
