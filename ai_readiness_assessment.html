@@ -584,4 +584,292 @@
                     <label for="marketingConsent">
                         I agree to receive future insights and case studies about AI implementation for SMEs. 
                         You can unsubscribe at any time. <small>(Required to receive your results)</small>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="results" id="results">
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scoreText">0%</span>
+                </div>
+                <div class="result-title" id="resultTitle"></div>
+                <div class="result-description" id="resultDescription"></div>
+                <div class="recommendations" id="recommendations"></div>
+                <div class="cta">
+                    <h3>Ready to Take the Next Step?</h3>
+                    <p>Book a free 30-minute AI strategy consultation to discuss your specific opportunities and implementation roadmap.</p>
+                </div>
                 
+                <div class="sources">
+                    <h4>Research Sources</h4>
+                    <p><strong>Statistics referenced:</strong> Zapier (2024), ProcessMaker (2024), Kissflow (2025), Salesforce SMB Trends Report (2024), McKinsey AI Report (2024), PwC AI Predictions (2025), US Census Bureau Business Trends Survey (2024).</p>
+                    <p><strong>Key findings:</strong> Data represents responses from 1,000+ executives across 20+ sectors, 3,613 employees, and SME surveys from multiple regions including UK, US, and EU markets.</p>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        let answers = {};
+        let startTime = Date.now();
+        let timerInterval;
+
+        // Start timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const remaining = Math.max(0, 60 - elapsed);
+                document.getElementById('timer').textContent = `⏱️ ${remaining}s`;
+                
+                if (remaining === 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = '⏱️ Time\'s up!';
+                }
+            }, 1000);
+        }
+
+        startTimer();
+
+        // Handle option selection
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('option') || e.target.parentElement.classList.contains('option')) {
+                const option = e.target.classList.contains('option') ? e.target : e.target.parentElement;
+                const questionNum = option.dataset.question;
+                const value = parseInt(option.dataset.value);
+                
+                // Remove previous selections
+                document.querySelectorAll(`[data-question="${questionNum}"]`).forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selection
+                option.classList.add('selected');
+                answers[questionNum] = value;
+                
+                // Enable next button
+                document.getElementById('nextBtn').disabled = false;
+            }
+        });
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById(`question${currentQuestion}`).classList.remove('active');
+                currentQuestion++;
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+                
+                updateProgress();
+                
+                // Update buttons
+                document.getElementById('prevBtn').style.display = 'block';
+                document.getElementById('nextBtn').disabled = true;
+                
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('nextBtn').textContent = 'Get My AI Readiness Score';
+                    document.getElementById('nextBtn').onclick = showContactForm;
+                }
+                
+                // Check if already answered
+                if (answers[currentQuestion]) {
+                    document.getElementById('nextBtn').disabled = false;
+                    document.querySelector(`[data-question="${currentQuestion}"][data-value="${answers[currentQuestion]}"]`).classList.add('selected');
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById(`question${currentQuestion}`).classList.remove('active');
+                currentQuestion--;
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+                
+                updateProgress();
+                
+                // Update buttons
+                if (currentQuestion === 1) {
+                    document.getElementById('prevBtn').style.display = 'none';
+                }
+                
+                document.getElementById('nextBtn').textContent = 'Next Question';
+                document.getElementById('nextBtn').onclick = nextQuestion;
+                document.getElementById('nextBtn').disabled = false;
+                
+                // Show previous selection
+                if (answers[currentQuestion]) {
+                    document.querySelector(`[data-question="${currentQuestion}"][data-value="${answers[currentQuestion]}"]`).classList.add('selected');
+                }
+            }
+        }
+
+        function showContactForm() {
+            // Hide current question
+            document.getElementById(`question${currentQuestion}`).classList.remove('active');
+            
+            // Show contact form
+            document.getElementById('contactForm').classList.add('active');
+            
+            // Update buttons
+            document.getElementById('prevBtn').style.display = 'block';
+            document.getElementById('nextBtn').textContent = 'Get My Results';
+            document.getElementById('nextBtn').onclick = calculateResults;
+            document.getElementById('nextBtn').disabled = true;
+            
+            // Enable submit when form is complete
+            const companyInput = document.getElementById('companyName');
+            const consentCheckbox = document.getElementById('marketingConsent');
+            
+            function checkFormCompletion() {
+                const isComplete = companyInput.value.trim() !== '' && consentCheckbox.checked;
+                document.getElementById('nextBtn').disabled = !isComplete;
+            }
+            
+            companyInput.addEventListener('input', checkFormCompletion);
+            consentCheckbox.addEventListener('change', checkFormCompletion);
+        }
+
+        function calculateResults() {
+            // Hide contact form
+            document.getElementById('contactForm').classList.remove('active');
+            
+            // Hide navigation
+            document.querySelector('.nav-buttons').style.display = 'none';
+            
+            // Calculate score
+            const totalScore = Object.values(answers).reduce((sum, val) => sum + val, 0);
+            const maxScore = totalQuestions * 3;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+            
+            // Simulate AI analysis with Claude-powered insights
+            const insights = generateAIInsights(totalScore, answers);
+            
+            // Show results
+            displayResults(percentage, insights);
+            
+            // Update progress to 100%
+            document.getElementById('progressFill').style.width = '100%';
+            
+            // Clear timer
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = '✅ Complete';
+        }
+
+        function generateAIInsights(score, userAnswers) {
+            // Simulate Claude agent analysis
+            const companyName = document.getElementById('companyName').value;
+            
+            if (score >= 12) {
+                return {
+                    level: 'high',
+                    title: 'High AI Readiness',
+                    description: `Excellent news, ${companyName}! Your organisation shows strong indicators for successful AI implementation. You have the right combination of operational need, technical readiness, and investment capacity to see significant returns from internal AI tools.`,
+                    recommendations: [
+                        'Start with a pilot AI project in your most repetitive process area',
+                        'Develop an AI governance framework and usage policies',
+                        'Consider custom AI agents for customer service or document processing',
+                        'Explore integration opportunities with your existing tech stack',
+                        'Plan a phased rollout strategy across different departments'
+                    ],
+                    priority: 'immediate'
+                };
+            } else if (score >= 8) {
+                return {
+                    level: 'medium',
+                    title: 'Moderate AI Readiness',
+                    description: `${companyName} has good potential for AI adoption with some preparation needed. Your organisation would benefit from a structured approach to AI implementation, focusing on change management and targeted use cases.`,
+                    recommendations: [
+                        'Begin with low-risk AI tools for specific tasks (email drafting, data analysis)',
+                        'Invest in team training and AI literacy programmes',
+                        'Start small with pre-built AI solutions before custom development',
+                        'Establish clear success metrics and pilot project goals',
+                        'Build internal champions to drive adoption'
+                    ],
+                    priority: 'planned'
+                };
+            } else {
+                return {
+                    level: 'low',
+                    title: 'Early-Stage AI Readiness',
+                    description: `${companyName} would benefit from foundational preparation before implementing AI tools. Focus on building the right conditions for future AI success through process optimisation and team development.`,
+                    recommendations: [
+                        'Standardise and document current processes first',
+                        'Identify and prioritise your highest-impact repetitive tasks',
+                        'Invest in basic digital literacy and process automation',
+                        'Consider off-the-shelf tools before custom AI solutions',
+                        'Build a culture of continuous improvement and experimentation'
+                    ],
+                    priority: 'foundational'
+                };
+            }
+        }
+
+        function displayResults(percentage, insights) {
+            document.getElementById('results').classList.add('active');
+            
+            // Animate score
+            const scoreCircle = document.getElementById('scoreCircle');
+            const scoreText = document.getElementById('scoreText');
+            
+            scoreCircle.classList.add(`score-${insights.level}`);
+            
+            let currentScore = 0;
+            const scoreAnimation = setInterval(() => {
+                currentScore += 2;
+                scoreText.textContent = currentScore + '%';
+                
+                if (currentScore >= percentage) {
+                    scoreText.textContent = percentage + '%';
+                    clearInterval(scoreAnimation);
+                }
+            }, 30);
+            
+            // Set content
+            document.getElementById('resultTitle').textContent = insights.title;
+            document.getElementById('resultDescription').textContent = insights.description;
+            
+            const recommendationsList = insights.recommendations.map(rec => `<li>${rec}</li>`).join('');
+            document.getElementById('recommendations').innerHTML = `
+                <h3>🚀 Recommended Next Steps</h3>
+                <ul>${recommendationsList}</ul>
+            `;
+            
+            // Log results (in real implementation, this would send to your CRM/database)
+            console.log('Assessment Results:', {
+                company: document.getElementById('companyName').value,
+                linkedin: document.getElementById('linkedinId').value,
+                score: percentage,
+                answers: answers,
+                timestamp: new Date().toISOString(),
+                completionTime: Math.floor((Date.now() - startTime) / 1000)
+            });
+        }
+
+        // Initialize
+        updateProgress();
+        
+        // Add some micro-interactions
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            option.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
