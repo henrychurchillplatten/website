@@ -51,7 +51,7 @@
             margin: 0 auto;
             padding: 0 40px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 400px;
             gap: 60px;
             align-items: center;
             position: relative;
@@ -101,8 +101,9 @@
 
         .cta-buttons {
             display: flex;
+            flex-direction: column;
             gap: 20px;
-            flex-wrap: wrap;
+            max-width: 400px;
         }
 
         .btn {
@@ -141,9 +142,10 @@
             border-color: rgba(255,255,255,0.5);
         }
 
-        .hero-visual {
-            text-align: center;
-            position: relative;
+        .hero-assessments {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .assessment-preview {
@@ -209,6 +211,13 @@
         .stat-label {
             font-size: 0.9em;
             opacity: 0.8;
+        }
+
+        .assessment-preview .btn {
+            position: relative;
+            z-index: 1;
+            font-size: 1em;
+            padding: 12px 25px;
         }
 
         /* Services Section */
@@ -484,7 +493,7 @@
             }
 
             .cta-buttons {
-                justify-content: center;
+                align-items: center;
             }
 
             .preview-stats {
@@ -539,13 +548,11 @@
                 </div>
 
                 <div class="cta-buttons">
-                    <a href="ai_strategy_assessment.html" class="btn btn-primary">Take Free AI Strategy Assessment to discover the best route forward for your company</a>
-                    <a href="ai_readiness_assessment.html" class="btn btn-primary">Take Free AI Readiness Test, to check it you're ready to use AI in your company</a>
-                    <a href="mailto:henry.platten@gmail.com?subject=AI Strategy Consultation" class="btn btn-secondary">Book Strategy Call</a>
+                    <a href="mailto:henry.platten@gmail.com?subject=AI Strategy Consultation" class="btn btn-secondary">📞 Book Strategy Call</a>
                 </div>
             </div>
 
-            <div class="hero-visual">
+            <div class="hero-assessments">
                 <div class="assessment-preview">
                     <h3>🤖 AI Strategy Assessment</h3>
                     <p>Discover your optimal AI approach in 90 seconds</p>
@@ -567,9 +574,7 @@
                     
                     <a href="ai_strategy_assessment.html" class="btn btn-primary">Start Assessment</a>
                 </div>
-            </div>
 
-            <div class="hero-visual">
                 <div class="assessment-preview">
                     <h3>🤖 AI Readiness Test</h3>
                     <p>Discover if you're ready to bring AI into your company</p>
@@ -618,7 +623,7 @@
                 </div>
 
                 <div class="service-card fade-in-up">
-                    <span class="service-icon">👔</span>
+                    <span class="service-icon">💡</span>
                     <h3>Board Advisory</h3>
                     <p>Strategic AI governance and oversight for boards navigating the opportunities and risks of artificial intelligence.</p>
                     <ul class="service-features">
@@ -759,7 +764,7 @@
                 <h3>Henry Platten</h3>
                 <p>AI Strategy Expert helping organisations navigate their AI transformation journey with confidence and clarity.</p>
                 <div class="social-links">
-                    <a href="#" class="mailto:henry.platten@gmail.com">📧</a>
+                    <a href="mailto:henry.platten@gmail.com" class="social-link">📧</a>
                     <a href="#" class="social-link">💼</a>
                     <a href="#" class="social-link">🐦</a>
                 </div>
@@ -783,7 +788,7 @@
             
             <div class="footer-section">
                 <h3>Contact</h3>
-                <p><a href="mailto:henry.platten@gmail.com">henry@henryplatten.com</a></p>
+                <p><a href="mailto:henry.platten@gmail.com">henry.platten@gmail.com</a></p>
                 <p>Available for:</p>
                 <p>• Strategy consultations</p>
                 <p>• Speaking engagements</p>
@@ -846,7 +851,10 @@
         let tiltAngle = 0;
         setInterval(() => {
             tiltAngle += 0.5;
-            document.querySelector('.hero::before').style.transform = `translateY(-20px) rotate(${tiltAngle}deg)`;
+            const heroBefore = document.querySelector('.hero::before');
+            if (heroBefore) {
+                heroBefore.style.transform = `translateY(-20px) rotate(${tiltAngle}deg)`;
+            }
         }, 100);
     </script>
 </body>
